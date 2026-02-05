@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhamad Sandi Saputra Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-deep: #05040d;
+            --purple-main: #9d50bb;
+            --purple-glow: rgba(157, 80, 187, 0.7);
+            --accent-pink: #ff00cc;
+            --text-white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-deep); color: var(--text-white); overflow-x: hidden; scroll-behavior: smooth; }
+
+        /* --- CUSTOM SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--purple-main); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-pink); }
+
+        /* --- SCROLL REVEAL ANIMATION --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- BACKGROUND ELEMENTS --- */
+        .space-layers {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -5;
+            background: radial-gradient(circle at 50% 50%, #1a103d 0%, #05040d 100%);
+        }
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -4;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.5; animation: starsMove 150s linear infinite;
+        }
+        .nebula-mouse {
+            position: fixed; width: 500px; height: 500px;
+            background: radial-gradient(circle, var(--purple-glow) 0%, transparent 70%);
+            filter: blur(60px); border-radius: 50%; opacity: 0.3;
+            pointer-events: none; z-index: -2; transition: transform 0.15s ease-out;
+        }
+        @keyframes thunderFlash {
+            0%, 92%, 100% { opacity: 0; }
+            93% { opacity: 0.2; background: var(--purple-main); }
+            95% { opacity: 0.1; }
+            97% { opacity: 0.4; background: #fff; }
+        }
+        .lightning {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -3; pointer-events: none; animation: thunderFlash 7s infinite;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 8%; position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(5, 4, 13, 0.9); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(157, 80, 187, 0.2);
+        }
+        .logo { font-size: 1.6rem; font-weight: 800; letter-spacing: 2px; }
+        .logo span { color: var(--purple-main); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 0 10%; gap: 60px; position: relative; z-index: 10;
+        }
+        .profile-wrapper { position: relative; width: 350px; height: 350px; }
+        .profile-img { 
+            width: 100%; height: 100%; border-radius: 50%; 
+            border: 4px solid var(--purple-main); box-shadow: 0 0 40px var(--purple-glow);
+            object-fit: cover; position: relative; z-index: 5;
+        }
+        .static-cloud {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 130%; height: 130%; background: radial-gradient(circle, var(--purple-glow) 0%, transparent 60%);
+            filter: blur(40px); opacity: 0.5; z-index: 1; animation: pulse 4s infinite alternate;
+        }
+        .hero-right h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero-right .bio { font-size: 1rem; opacity: 0.8; line-height: 1.8; margin-bottom: 2rem; }
+
+        /* --- SOCIAL LINKS --- */
+        .social-bar { display: flex; gap: 20px; flex-wrap: wrap; }
+        .social-bar a { 
+            color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 600;
+            display: flex; align-items: center; gap: 8px; transition: 0.3s;
+            padding: 8px 16px; background: rgba(255,255,255,0.05); border-radius: 50px;
+        }
+        .social-bar a:hover { background: var(--purple-main); transform: translateY(-3px); }
+
+        /* --- SKILLS & GALLERY --- */
+        .container { padding: 5rem 8%; position: relative; z-index: 10; }
+        .section-header { margin-bottom: 3rem; border-left: 5px solid var(--purple-main); padding-left: 20px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: #0f0c29; border-radius: 15px; overflow: hidden; border: 1px solid #222; transition: 0.4s; position: relative;}
+        .card:hover { border-color: var(--purple-main); transform: scale(1.02); }
+
+        /* --- MUSIC PLAYER --- */
+        .music-btn {
+            position: fixed; bottom: 30px; right: 30px; 
+            background: var(--purple-main); padding: 15px 25px;
+            border-radius: 50px; display: flex; align-items: center; gap: 15px;
+            cursor: pointer; box-shadow: 0 0 20px var(--purple-glow); z-index: 2000;
+        }
+
+        @keyframes starsMove { from { background-position: 0 0; } to { background-position: 10000px 5000px; } }
+        @keyframes pulse { from { opacity: 0.3; transform: translate(-50%, -50%) scale(1); } to { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); } }
+
+        @media (max-width: 968px) {
+            .hero { flex-direction: column; text-align: center; height: auto; padding-top: 150px; }
+            .hero-right h1 { font-size: 2.5rem; }
+            .social-bar { justify-content: center; }
+        }
+    </style>
+    <link rel="stylesheet" href="bintang.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="efek1.css">
+    <link rel="stylesheet" href="box-shadow.css">
+</head>
+<body>
+
+    <div id="starfall-container"></div>
+    <div class="space-layers"></div>
+    <div class="stars"></div>
+    <div class="lightning"></div>
+    <div class="nebula-mouse" id="nebula"></div>
+
+    <nav>
+        <div class="logo">ITS<span>SANDAW</span></div>
+        <div style="display: flex; gap: 20px;">
+            <a href="#home" style="color: #fff; text-decoration: none; font-size: 0.8rem;">HOME</a>
+            <a href="#work" style="color: #fff; text-decoration: none; font-size: 0.8rem;">WORKS</a>
+            <a href="#contact" style="color: #fff; text-decoration: none; font-size: 0.8rem;">CONTACT</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-left reveal">
+            <div class="profile-wrapper">
+                <div class="static-cloud"></div>
+                <img src="sandaw.jpeg" alt="ItsSandaw" class="profile-img">
+            </div>
+        </div>
+        <div class="hero-right reveal">
+            <h1>CINEMATIC <br><span style="color: var(--purple-main);">VISUALIST</span></h1>
+            <div class="bio">
+                "Halo! Saya <strong>Muhamad Sandi Saputra</strong>, seorang Video Editor, Storyteller, dan Konten Kreator yang haus akan inovasi visual. Dengan keahlian mendalam di <strong>Adobe Premiere Pro, After Effects, dan Photoshop</strong>."
+            </div>
+            <div class="social-bar">
+                <a href="https://www.youtube.com/@ItsSandaw" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+                <a href="https://tiktok.com/@dawrise" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+                <a href="https://www.instagram.com/sandawgs/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="mailto:deaddaw@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+            </div>
+        </div>
+    </section>
+
+<div class="section-header reveal" style="text-align: center; border-left: none; border-bottom: 3px solid var(--purple-main); width: fit-content; margin: 5rem auto 3rem; padding-bottom: 10px;">
+    <h2 style="letter-spacing: 2px;">MULTIMEDIA <span style="color: var(--purple-main);">SKILLS</span></h2>
+    <p style="opacity: 0.6; font-size: 0.9rem;">Software & Expertise</p>
+</div>
+
+<div style="display: flex; justify-content: center; width: 100%; padding: 0 5%;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 1100px;">
+        
+        <div class="reveal" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(157, 80, 187, 0.2); padding: 25px; border-radius: 20px; backdrop-filter: blur(10px);">
+            <i class="fas fa-film" style="font-size: 2rem; color: var(--purple-main); margin-bottom: 15px;"></i>
+            <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: #fff;">CORE EXPERTISE</h3>
+            <ul style="list-style: none; font-size: 0.85rem; opacity: 0.8; line-height: 2;">
+                <li><i class="fas fa-check-circle" style="color: var(--accent-pink); margin-right: 8px;"></i> Video Editing</li>
+                <li><i class="fas fa-check-circle" style="color: var(--accent-pink); margin-right: 8px;"></i> Cinematic Storytelling</li>
+                <li><i class="fas fa-check-circle" style="color: var(--accent-pink); margin-right: 8px;"></i> Short-form Content</li>
+            </ul>
+        </div>
+
+        <div class="reveal" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(157, 80, 187, 0.2); padding: 25px; border-radius: 20px; backdrop-filter: blur(10px);">
+            <i class="fas fa-laptop-code" style="font-size: 2rem; color: var(--purple-main); margin-bottom: 15px;"></i>
+            <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: #fff;">SOFTWARE TOOLS</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <span style="background: rgba(157, 80, 187, 0.2); border: 1px solid var(--purple-main); padding: 4px 12px; border-radius: 50px; font-size: 0.75rem;">Premiere Pro</span>
+                <span style="background: rgba(157, 80, 187, 0.2); border: 1px solid var(--purple-main); padding: 4px 12px; border-radius: 50px; font-size: 0.75rem;">After Effects</span>
+                <span style="background: rgba(157, 80, 187, 0.2); border: 1px solid var(--purple-main); padding: 4px 12px; border-radius: 50px; font-size: 0.75rem;">Photoshop</span>
+                <span style="background: rgba(157, 80, 187, 0.2); border: 1px solid var(--purple-main); padding: 4px 12px; border-radius: 50px; font-size: 0.75rem;">CapCut</span>
+            </div>
+        </div>
+
+        <div class="reveal" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(157, 80, 187, 0.2); padding: 25px; border-radius: 20px; backdrop-filter: blur(10px);">
+            <i class="fas fa-wand-magic-sparkles" style="font-size: 2rem; color: var(--purple-main); margin-bottom: 15px;"></i>
+            <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: #fff;">WORKFLOW</h3>
+            <p style="font-size: 0.8rem; opacity: 0.7; line-height: 1.6;">
+                Mulai dari perancangan skrip, proses editing cinematic, hingga color grading untuk hasil visual maksimal.
+            </p>
+        </div>
+
+    </div>
+</div>
+<div class="section-header reveal" style="text-align: center; border-left: none; border-bottom: 3px solid var(--purple-main); width: fit-content; margin: 5rem auto 3rem; padding-bottom: 10px;">
+    <h2 style="letter-spacing: 2px;">CINEMATIC <span style="color: var(--purple-main);">SHORT FILM</span></h2>
+    <p style="opacity: 0.6; font-size: 0.9rem;">The Evolution: From Phase 1 to Final Cut</p>
+</div>
+
+<div style="display: flex; justify-content: center; width: 100%; padding: 0 5%;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; width: 100%; max-width: 1100px;">
+        
+        <div class="reveal" style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(157, 80, 187, 0.4); border-radius: 20px; overflow: hidden; transition: 0.3s;">
+            <div style="width: 100%; aspect-ratio: 16/9; background: #000;">
+                <video width="100%" height="100%" controls style="object-fit: cover; opacity: 0.7;">
+                    <source src="video1.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div style="padding: 20px; position: relative;">
+                <span style="position: absolute; top: -15px; left: 20px; background: #333; padding: 2px 12px; border-radius: 20px; font-size: 0.6rem; color: #aaa;">STEP 01</span>
+                <h4 style="color: var(--purple-main); font-size: 0.7rem; margin-bottom: 5px; letter-spacing: 1px;">FIRST SHORT FILM</h4>
+                <p style="font-size: 0.75rem; opacity: 0.6;">Eksplorasi awal teknik pengambilan gambar dan basic editing.</p>
+            </div>
+        </div>
+
+        <div class="reveal" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(157, 80, 187, 0.2); border-radius: 20px; overflow: hidden; transition: 0.3s;">
+            <div style="width: 100%; aspect-ratio: 16/9; background: #000;">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/KODE_FILM_2" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div style="padding: 20px; position: relative;">
+                <span style="position: absolute; top: -15px; left: 20px; background: var(--purple-main); padding: 2px 12px; border-radius: 20px; font-size: 0.6rem; color: #fff;">STEP 02</span>
+                <h4 style="color: var(--purple-main); font-size: 0.7rem; margin-bottom: 5px; letter-spacing: 1px;">IMPROVE SHORT FILM</h4>
+                <p style="font-size: 0.75rem; opacity: 0.6;">Penerapan color grading dan sound design yang lebih kompleks.</p>
+            </div>
+        </div>
+
+        <div class="reveal" style="background: rgba(255,255,255,0.05); border: 2px solid var(--purple-main); border-radius: 20px; overflow: hidden; transition: 0.3s; box-shadow: 0 0 25px rgba(157, 80, 187, 0.3);">
+            <div style="width: 100%; aspect-ratio: 16/9; background: #000; position: relative;">
+                <div style="position: absolute; top: 10px; right: 10px; background: var(--accent-pink); color: white; font-size: 0.6rem; padding: 3px 12px; border-radius: 20px; z-index: 5; font-weight: bold; box-shadow: 0 0 10px var(--accent-pink);">FINAL CUT</div>
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/KODE_FILM_3" frameborder="0" allowfullscreen style="filter: contrast(1.1);"></iframe>
+            </div>
+            <div style="padding: 20px; position: relative;">
+                <span style="position: absolute; top: -15px; left: 20px; background: var(--accent-pink); padding: 2px 12px; border-radius: 20px; font-size: 0.6rem; color: #fff;">STEP 03</span>
+                <h4 style="color: var(--accent-pink); font-size: 0.7rem; margin-bottom: 5px; letter-spacing: 1px;">FINAL CINEMATIC CUT</h4>
+                <p style="font-size: 0.75rem; opacity: 0.9;">Hasil akhir dengan standar portofolio profesional.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="section-header reveal" style="text-align: center; border-left: none; border-bottom: 3px solid var(--purple-main); width: fit-content; margin: 5rem auto 3rem; padding-bottom: 10px;">
+    <h2 style="letter-spacing: 2px;">DESIGN <span style="color: var(--purple-main);">THUMBNAIL</span></h2>
+    <p style="opacity: 0.6; font-size: 0.9rem;">Youtube Modern Thumbnail</p>
+</div>
+
+<div style="display: flex; justify-content: center; width: 100%; padding: 20px 0 5rem;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; width: 90%; max-width: 1100px;">
+        <div class="reveal" style="border-radius: 12px; overflow: hidden; aspect-ratio: 16/9; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: 0.4s;">
+            <img src="thumb1.jpg" style="width: 100%; height: 100%; object-fit: cover;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div class="reveal" style="border-radius: 12px; overflow: hidden; aspect-ratio: 16/9; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: 0.4s;">
+            <img src="thumb2.jpg" style="width: 100%; height: 100%; object-fit: cover;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div class="reveal" style="border-radius: 12px; overflow: hidden; aspect-ratio: 16/9; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: 0.4s;">
+            <img src="thumb3.jpg" style="width: 100%; height: 100%; object-fit: cover;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+    </div>
+</div>
+
+<div class="section-header reveal" style="margin-top: 5rem; text-align: center; border-left: none; border-bottom: 3px solid var(--purple-main); width: fit-content; margin-left: auto; margin-right: auto; padding-bottom: 10px;">
+    <h2 style="letter-spacing: 2px;">CREATIVE <span style="color: var(--purple-main);">POSTER DESIGNS</span></h2>
+    <p style="opacity: 0.6; font-size: 0.9rem;">Visual Graphic & Branding Projects</p>
+</div>
+
+<div style="display: flex; justify-content: center; width: 100%; padding: 20px 0;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 280px)); gap: 30px; width: 90%; max-width: 1100px; justify-content: center;">
+        
+        <div class="reveal" style="background: rgba(255,255,255,0.05); border-radius: 15px; border: 1px solid #333; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s;">
+            <div style="width: 100%; aspect-ratio: 9/16; background: #111; overflow: hidden;">
+                <img src="NAMA_FILE_POSTER_1.jpg" alt="Event Poster" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="padding: 15px; text-align: center; background: rgba(0,0,0,0.3);">
+                <h4 style="color: #ff00cc; font-size: 0.85rem; margin: 0;">EVENT POSTER</h4>
+            </div>
+        </div>
+
+        <div class="reveal" style="background: rgba(255,255,255,0.05); border-radius: 15px; border: 1px solid #333; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s;">
+            <div style="width: 100%; aspect-ratio: 9/16; background: #111; overflow: hidden;">
+                <img src="NAMA_FILE_POSTER_2.jpg" alt="Branding Flyer" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="padding: 15px; text-align: center; background: rgba(0,0,0,0.3);">
+                <h4 style="color: #ff00cc; font-size: 0.85rem; margin: 0;">BRANDING FLYER</h4>
+            </div>
+        </div>
+
+        <div class="reveal" style="background: rgba(255,255,255,0.05); border-radius: 15px; border: 1px solid #333; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s;">
+            <div style="width: 100%; aspect-ratio: 9/16; background: #111; overflow: hidden;">
+                <img src="NAMA_FILE_POSTER_3.jpg" alt="Movie Poster" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="padding: 15px; text-align: center; background: rgba(0,0,0,0.3);">
+                <h4 style="color: #ff00cc; font-size: 0.85rem; margin: 0;">MOVIE POSTER</h4>
+            </div>
+        </div>
+
+                <div class="reveal" style="background: rgba(255,255,255,0.05); border-radius: 15px; border: 1px solid #333; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s;">
+            <div style="width: 100%; aspect-ratio: 9/16; background: #111; overflow: hidden;">
+                <img src="NAMA_FILE_POSTER_3.jpg" alt="Movie Poster" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="padding: 15px; text-align: center; background: rgba(0,0,0,0.3);">
+                <h4 style="color: #ff00cc; font-size: 0.85rem; margin: 0;">MOVIE POSTER</h4>
+            </div>
+        </div>
+
+                <div class="reveal" style="background: rgba(255,255,255,0.05); border-radius: 15px; border: 1px solid #333; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s;">
+            <div style="width: 100%; aspect-ratio: 9/16; background: #111; overflow: hidden;">
+                <img src="NAMA_FILE_POSTER_3.jpg" alt="Movie Poster" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="padding: 15px; text-align: center; background: rgba(0,0,0,0.3);">
+                <h4 style="color: #ff00cc; font-size: 0.85rem; margin: 0;">MOVIE POSTER</h4>
+            </div>
+        </div>
+
+                <div class="reveal" style="background: rgba(255,255,255,0.05); border-radius: 15px; border: 1px solid #333; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s;">
+            <div style="width: 100%; aspect-ratio: 9/16; background: #111; overflow: hidden;">
+                <img src="NAMA_FILE_POSTER_3.jpg" alt="Movie Poster" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="padding: 15px; text-align: center; background: rgba(0,0,0,0.3);">
+                <h4 style="color: #ff00cc; font-size: 0.85rem; margin: 0;">MOVIE POSTER</h4>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="section-header reveal" style="margin-top: 5rem; text-align: center; border-left: none; border-bottom: 3px solid var(--purple-main); width: fit-content; margin-left: auto; margin-right: auto; padding-bottom: 10px;">
+        <h2 style="letter-spacing: 2px;">LATEST PROJECTS <span style="color: var(--purple-main);">VIDEO</span></h2>
+    </div>
+
+    <div style="display: flex; justify-content: center; width: 100%; padding: 20px 0;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 280px)); gap: 30px; width: 90%; max-width: 1100px; justify-content: center;">
+            
+            <div class="card reveal" style="aspect-ratio: 9/16; background: #000; border-radius: 15px; overflow: hidden; border: 1px solid #333;">
+                <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chillsyuk/video/7582548961068698898" data-video-id="7582548961068698898" style="width: 100%; height: 100%;">
+                    <section></section>
+                </blockquote>
+            </div>
+
+            <div class="card reveal" style="aspect-ratio: 9/16; background: #000; border-radius: 15px; overflow: hidden; border: 1px solid #333;">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/GANTI_KODE_SHORTS_2" frameborder="0" allowfullscreen></iframe>
+            </div>
+
+            <div class="card reveal" style="aspect-ratio: 9/16; background: #000; border-radius: 15px; overflow: hidden; border: 1px solid #333;">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/GANTI_KODE_SHORTS_3" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <section class="services-section">
+    <h2 class="section-title">WHAT I CAN DO FOR YOU</h2>
+    <div class="services-container">
+        <div class="service-card">
+            <div class="service-icon">🎬</div>
+            <h3>Cinematic Editing</h3>
+            <p>Mengubah footage mentah menjadi cerita visual yang dramatis dengan color grading kelas film.</p>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">📱</div>
+            <h3>Social Media Content</h3>
+            <p>Video vertikal (TikTok/Reels) yang fast-paced dan catchy untuk ningkatin engagement brand kamu.</p>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">🎨</div>
+            <h3>Visual Storytelling</h3>
+            <p>Pembuatan konsep dan desain visual yang kuat untuk poster atau aset digital lainnya.</p>
+        </div>
+    </div>
+</section>
+
+    <footer id="contact" style="text-align: center; padding: 5rem 1rem; border-top: 1px solid rgba(157, 80, 187, 0.2); margin-top: 5rem;">
+        <h2 style="font-weight: 800; letter-spacing: 1px; margin-bottom: 10px;">Life is short, make it sweeet</h2>
+        <p style="opacity: 0.6; font-size: 0.9rem;">CONTACT: deaddaw@gmail.com</p>
+    </footer>
+
+    <div class="music-btn" onclick="toggleMusic()">
+        <i class="fas fa-play" id="m-icon"></i>
+        <span style="font-weight: 800; font-size: 0.7rem; letter-spacing: 1px;">PLAY SPACE AMBIENT</span>
+        <audio id="bg-music" loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+<script async src="https://www.tiktok.com/embed.js"></script>
+    <script>
+        // MOUSE NEBULA
+        const nebula = document.getElementById('nebula');
+        document.addEventListener('mousemove', (e) => {
+            nebula.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
+        });
+
+        // SCROLL REVEAL LOGIC
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Run on load
+
+        // MUSIC LOGIC
+        const music = document.getElementById('bg-music');
+        const icon = document.getElementById('m-icon');
+        let playing = false;
+        function toggleMusic() {
+            if(!playing) { music.play(); icon.className = 'fas fa-pause'; }
+            else { music.pause(); icon.className = 'fas fa-play'; }
+            playing = !playing;
+        }
+    </script>
+
+ <script>
+        function createStar() {
+            const container = document.getElementById('starfall-container');
+            if (!container) return; // Tambahkan ini biar nggak error
+
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            const startX = Math.random() * window.innerWidth + 200;
+            const startY = Math.random() * (window.innerHeight / 2);
+            
+            star.style.left = startX + 'px';
+            star.style.top = startY + 'px';
+            
+            const duration = Math.random() * 2 + 2;
+            star.style.animationDuration = duration + 's';
+            
+            container.appendChild(star);
+            
+            setTimeout(() => {
+                star.remove();
+            }, duration * 1000);
+        }
+
+        setInterval(createStar, 1500);
+    </script>
+</body>
+</html>

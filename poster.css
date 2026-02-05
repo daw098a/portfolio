@@ -1,0 +1,49 @@
+/* Container untuk Poster */
+.poster-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Mengecilkan ukuran kolom */
+    gap: 25px;
+}
+
+.poster-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(157, 80, 187, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 400px; /* Mengunci tinggi agar rapi */
+}
+
+.poster-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--accent-pink);
+    box-shadow: 0 10px 30px rgba(255, 0, 204, 0.2);
+}
+
+.poster-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Gambar akan terpotong rapi di dalam kotak */
+    transition: 0.5s;
+}
+
+.poster-card:hover img {
+    filter: brightness(0.7);
+}
+
+/* Overlay teks saat di-hover */
+.poster-overlay {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    transition: 0.4s;
+    text-align: left;
+}
+
+.poster-card:hover .poster-overlay {
+    bottom: 0;
+}

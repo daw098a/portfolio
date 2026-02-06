@@ -1,0 +1,173 @@
+.music-bridge-section {
+    padding: 10rem 0 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.bridge-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+.bridge-text {
+    font-size: 5rem;
+    font-weight: 800;
+    letter-spacing: 15px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: shine 6s infinite linear;
+    margin-bottom: 0;
+    position: relative;
+    display: inline-block;
+}
+
+@keyframes shine {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.universe-word {
+    background: linear-gradient(90deg, #00f2ff, #9d50bb, #ff00cc, #00f2ff);
+    background-size: 300% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation:
+        shine-gradient 4s linear infinite,
+        universe-pulse 3s ease-in-out infinite alternate;
+    text-shadow:
+        0 0 8px rgba(157, 80, 187, 0.3),
+        0 0 15px rgba(0, 242, 255, 0.2);
+    position: relative;
+    display: inline-block;
+}
+
+.universe-word::after {
+    content: 'UNIVERSE';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    filter: blur(8px);
+    background: linear-gradient(90deg, #00f2ff, #9d50bb, #ff00cc, #00f2ff);
+    background-size: 300% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    opacity: 0.35;
+    animation: shine-gradient 4s linear infinite;
+}
+
+@keyframes shine-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 300% 50%;
+    }
+}
+
+@keyframes universe-pulse {
+    0% {
+        transform: scale(1);
+        filter: brightness(1) drop-shadow(0 0 2px rgba(157, 80, 187, 0.3));
+    }
+
+    100% {
+        transform: scale(1.03);
+        filter: brightness(1.15) drop-shadow(0 0 10px rgba(0, 242, 255, 0.5));
+    }
+}
+
+#music-dock {
+    position: relative;
+    width: fit-content;
+    min-width: 450px;
+    background: rgba(15, 12, 41, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(157, 80, 187, 0.3);
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    padding: 15px 40px;
+    gap: 25px;
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+#music-dock.playing {
+    border-color: var(--purple-main);
+    box-shadow: 0 0 40px var(--purple-glow);
+}
+
+/* Class saat muncul */
+#music-dock.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Waveform Visualizer */
+.waveform {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 30px;
+}
+
+.bar {
+    width: 3px;
+    height: 5px;
+    background: #d000ff;
+    /* Warna ungu sesuai desain */
+    border-radius: 10px;
+    box-shadow: 0 0 10px #d000ff;
+    /* Default state: paused */
+    height: 5px;
+    transition: height 0.2s ease;
+}
+
+#music-dock.playing .bar {
+    animation: pulse 1s infinite ease-in-out;
+}
+
+/* Animasi naik turun */
+@keyframes pulse {
+
+    0%,
+    100% {
+        height: 5px;
+    }
+
+    50% {
+        height: 25px;
+    }
+}
+
+/* Variasi animasi bar */
+.bar:nth-child(2n) {
+    animation-delay: 0.2s;
+    background: #00f2ff;
+    box-shadow: 0 0 10px #00f2ff;
+}
+
+.bar:nth-child(3n) {
+    animation-delay: 0.4s;
+}

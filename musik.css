@@ -13,9 +13,9 @@
 }
 
 .bridge-text {
-    font-size: 5rem;
+    font-size: 3rem;
     font-weight: 800;
-    letter-spacing: 15px;
+    letter-spacing: 8px;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.1);
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
@@ -97,15 +97,15 @@
 #music-dock {
     position: relative;
     width: fit-content;
-    min-width: 450px;
+    min-width: 320px;
     background: rgba(15, 12, 41, 0.4);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(157, 80, 187, 0.3);
     border-radius: 100px;
     display: flex;
     align-items: center;
-    padding: 15px 40px;
-    gap: 25px;
+    padding: 10px 25px;
+    gap: 15px;
     z-index: 100;
     opacity: 0;
     transform: translateY(30px);
@@ -129,7 +129,7 @@
     display: flex;
     align-items: center;
     gap: 3px;
-    height: 30px;
+    height: 20px;
 }
 
 .bar {

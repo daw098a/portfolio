@@ -56,7 +56,6 @@
         .snap-layer {
             min-height: 100vh;
             width: 100%;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -262,7 +261,7 @@
         }
 
         .hero-right h1 {
-            font-size: 4rem;
+            font-size: 3rem;
             line-height: 1.1;
             margin-bottom: 1.5rem;
         }
@@ -799,6 +798,11 @@
         }, observerOptions);
 
         layers.forEach(layer => observer.observe(layer));
+
+        // Initial check and scroll fallback
+        window.addEventListener('scroll', reveal);
+        window.addEventListener('load', reveal);
+        reveal(); // Run once on load
 
         // SMART NAVBAR LOGIC
         const nav = document.querySelector('nav');

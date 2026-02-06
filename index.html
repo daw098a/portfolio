@@ -51,16 +51,6 @@
             filter: blur(60px); border-radius: 50%; opacity: 0.3;
             pointer-events: none; z-index: -2; transition: transform 0.15s ease-out;
         }
-        @keyframes thunderFlash {
-            0%, 92%, 100% { opacity: 0; }
-            93% { opacity: 0.2; background: var(--purple-main); }
-            95% { opacity: 0.1; }
-            97% { opacity: 0.4; background: #fff; }
-        }
-        .lightning {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -3; pointer-events: none; animation: thunderFlash 7s infinite;
-        }
 
         /* --- NAVIGATION --- */
         nav {
@@ -128,6 +118,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="efek1.css">
     <link rel="stylesheet" href="box-shadow.css">
+    <link rel="stylesheet" href="border.css">
+    
 </head>
 <body>
 
@@ -215,7 +207,7 @@
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; width: 100%; max-width: 1100px;">
         
         <div class="reveal" style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(157, 80, 187, 0.4); border-radius: 20px; overflow: hidden; transition: 0.3s;">
-            <div style="width: 100%; aspect-ratio: 16/9; background: #000;">
+            <div style="width: 100%; aspect-ratio: 1/1; background: #000;">
                 <video width="100%" height="100%" controls style="object-fit: cover; opacity: 0.7;">
                     <source src="video1.mp4" type="video/mp4">
                 </video>
@@ -245,7 +237,7 @@
             </div>
             <div style="padding: 20px; position: relative;">
                 <span style="position: absolute; top: -15px; left: 20px; background: var(--accent-pink); padding: 2px 12px; border-radius: 20px; font-size: 0.6rem; color: #fff;">STEP 03</span>
-                <h4 style="color: var(--accent-pink); font-size: 0.7rem; margin-bottom: 5px; letter-spacing: 1px;">FINAL CINEMATIC CUT</h4>
+                <h4 style="color: var(--accent-pink); font-size: 0.7rem; margin-bottom: 5px; letter-spacing: 1px;">FINAL SHORT FILM</h4>
                 <p style="font-size: 0.75rem; opacity: 0.9;">Hasil akhir dengan standar portofolio profesional.</p>
             </div>
         </div>
@@ -384,15 +376,15 @@
 </section>
 
     <footer id="contact" style="text-align: center; padding: 5rem 1rem; border-top: 1px solid rgba(157, 80, 187, 0.2); margin-top: 5rem;">
-        <h2 style="font-weight: 800; letter-spacing: 1px; margin-bottom: 10px;">Life is short, make it sweeet</h2>
+        <h2 style="font-weight: 800; letter-spacing: 1px; margin-bottom: 10px;">Beyond the horizon.</h2>
         <p style="opacity: 0.6; font-size: 0.9rem;">CONTACT: deaddaw@gmail.com</p>
     </footer>
 
     <div class="music-btn" onclick="toggleMusic()">
         <i class="fas fa-play" id="m-icon"></i>
-        <span style="font-weight: 800; font-size: 0.7rem; letter-spacing: 1px;">PLAY SPACE AMBIENT</span>
+        <span style="font-weight: 800; font-size: 0.7rem; letter-spacing: 1px;">COLDPLAY SONG</span>
         <audio id="bg-music" loop>
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3" type="audio/mpeg">
+            <source src="coldplay.mp3" type="audio/mpeg">
         </audio>
     </div>
 
@@ -430,6 +422,8 @@
         }
     </script>
 
+    
+
  <script>
         function createStar() {
             const container = document.getElementById('starfall-container');
@@ -455,6 +449,7 @@
         }
 
         setInterval(createStar, 1500);
-    </script>
+    </script>    
+
 </body>
 </html>
